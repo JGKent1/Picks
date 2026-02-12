@@ -144,7 +144,7 @@ def _safe_float(value: Any, default: float = 0.0) -> float:
 
 def search_samgov_opportunities(keywords: str = "roofing", days_back: int = 30) -> list[dict[str, Any]]:
     """Search Sam.gov opportunities endpoint for matching notices."""
-    base_url = "https://api.sam.gov/opportunities/v2/search"
+    base_url = "https://api.sam.gov/prod/opportunities/v2/search"
 
     end_date = datetime.now()
     start_date = end_date - timedelta(days=days_back)
@@ -165,7 +165,10 @@ def search_samgov_opportunities(keywords: str = "roofing", days_back: int = 30) 
     )
 
     if SAM_GOV_API_KEY == "YOUR_API_KEY_HERE":
-        print("Warning: SAM_GOV_API_KEY is not set. API call is likely to fail.")
+        print("Warning: SAM_GOV_API_KEY is not set. Skipping API call.")
+        print("Get an API key at https://open.gsa.gov/api/opportunities-api/")
+        print("Set it as: export SAM_GOV_API_KEY='your_key_here'")
+        return []
 
     try:
         response = requests.get(base_url, params=params, timeout=30)
